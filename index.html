@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARUTOPUP | Diamond Top-Up</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#050b18;color:white;font-family:Arial,sans-serif}
+header{padding:18px;background:#09172d;border-bottom:1px solid #078cff;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:bold;color:#16baff}
+.logo span{color:white}
+header a{color:#8ceaff}
+.hero{text-align:center;padding:45px 15px;background:linear-gradient(140deg,#102e59,#080b20)}
+.hero h1{font-size:35px;margin:8px 0;color:#13baff}
+.hero p{color:#d6e7ff}
+section{max-width:850px;margin:28px auto;padding:0 14px}
+h2{color:#4ad8ff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#0b1930;border:1px solid #087df2;border-radius:12px;padding:16px;text-align:center}
+.gem{font-size:35px;color:#24caff}
+.price{font-size:22px;font-weight:bold;margin:10px}
+button,.btn{border:0;border-radius:8px;background:#078cff;color:white;padding:12px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block}
+.card button{width:100%}
+form{background:#0b1930;border:1px solid #087df2;border-radius:12px;padding:18px}
+label{display:block;margin:14px 0}
+input,select,textarea{display:block;width:100%;padding:12px;margin-top:7px;border-radius:7px;border:1px solid #34506e;background:#050b18;color:white;font-size:16px}
+form button{width:100%;font-size:16px}
+.pay{background:#101f39;padding:14px;border-radius:9px;overflow-wrap:anywhere}
+.note{font-size:13px;color:#aebed5;line-height:1.6}
+footer{text-align:center;padding:25px;color:#aebed5;border-top:1px solid #20314a}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">◆ ARU<span>TOPUP</span></div>
+  <a href="#order">Order Now</a>
+</header>
+
+<div class="hero">
+  <p>A R U T O P U P</p>
+  <h1>FREE FIRE<br>DIAMOND TOP-UP</h1>
+  <p>💎 Safe • Fast • Trusted</p>
+  <a class="btn" href="#packages">প্যাকেজ দেখুন</a>
+</div>
+
+<section id="packages">
+<h2>💎 Diamond Packages</h2>
+<div class="grid" id="packagesList"></div>
+<p class="note">দামগুলো নমুনা। সঠিক দাম বসিয়ে তারপর সাইট প্রকাশ করবেন।</p>
+</section>
+
+<section id="order">
+<h2>🛒 অর্ডার করুন</h2>
+<form id="orderForm">
+<label>আপনার নাম
+<input name="customer" required placeholder="আপনার নাম">
+</label>
+<label>Free Fire Player UID
+<input name="uid" required inputmode="numeric" pattern="[0-9]{6,15}" placeholder="Player UID">
+</label>
+<label>Diamond Package
+<select id="package" name="package"></select>
+</label>
+<label>পেমেন্ট পদ্ধতি
+<select id="method" name="method">
+<option value="bKash">bKash</option>
+<option value="Nagad">Nagad</option>
+</select>
+</label>
+<div class="pay">
+  <p>পেমেন্ট নম্বর: <b id="payNumber"></b></p>
+  <p class="note">নম্বরটি যাচাই করে পেমেন্ট করুন। Transaction ID নিচে দিন।</p>
+</div>
+<label>Transaction ID
+<input name="trx" required placeholder="TrxID লিখুন">
+</label>
+<label>অতিরিক্ত তথ্য (ঐচ্ছিক)
+<textarea name="note" rows="2"></textarea>
+</label>
+<button type="submit">WhatsApp-এ অর্ডার পাঠান</button>
+<p id="message" class="note"></p>
+</form>
+</section>
+
+<section>
+<h2>📌 কীভাবে অর্ডার করবেন?</h2>
+<p>১. প্যাকেজ বেছে নিন।</p>
+<p>২. Player UID দিন।</p>
+<p>৩. bKash/Nagad-এ পেমেন্ট করুন।</p>
+<p>৪. Transaction ID দিয়ে WhatsApp-এ অর্ডার পাঠান।</p>
+<p class="note">পেমেন্ট যাচাই হওয়ার পর অর্ডার নিশ্চিত হবে।</p>
+</section>
+
+<footer>
+<strong>◆ ARUTOPUP</strong>
+<p>Free Fire Diamond Top-Up</p>
+<p class="note">Independent top-up storefront; not affiliated with Garena.</p>
+</footer>
+
+<script>
+/* প্রকাশের আগে নিচের নম্বরগুলো নিজের তথ্য দিয়ে বদলান */
+const WHATSAPP = "8801XXXXXXXXX";
+const BKASH = "আপনার bKash নম্বর";
+const NAGAD = "আপনার Nagad নম্বর";
+
+const items = [
+ ["100 Diamonds",170],
+ ["310 Diamonds",480],
+ ["520 Diamonds",780],
+ ["1060 Diamonds",1550],
+ ["2180 Diamonds",3100],
+ ["5600 Diamonds",7600]
+];
+
+const list = document.getElementById("packagesList");
+const select = document.getElementById("package");
+
+items.forEach((item,i)=>{
+ const card=document.createElement("div");
+ card.className="card";
+ const gem=document.createElement("div");
+ gem.className="gem";
+ gem.textContent="💎";
+ const title=document.createElement("h3");
+ title.textContent=item[0];
+ const price=document.createElement("div");
+ price.className="price";
+ price.textContent="৳ "+item[1].toLocaleString("en-US");
+ const btn=document.createElement("button");
+ btn.textContent="Buy Now";
+ btn.type="button";
+ btn.onclick=()=>{
+  select.value=String(i);
+  document.getElementById("order").scrollIntoView({behavior:"smooth"});
+ };
+ card.append(gem,title,price,btn);
+ list.append(card);
+ const opt=document.createElement("option");
+ opt.value=String(i);
+ opt.textContent=item[0]+" — ৳ "+item[1];
+ select.append(opt);
+});
+
+const method=document.getElementById("method");
+function showNumber(){
+ document.getElementById("payNumber").textContent=
+ method.value==="bKash"?BKASH:NAGAD;
+}
+method.addEventListener("change",showNumber);
+showNumber();
+
+document.getElementById("orderForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const f=new FormData(e.target);
+ const item=items[Number(f.get("package"))];
+ const phone=WHATSAPP.replace(/\D/g,"");
+ if(phone.length<10 || WHATSAPP.includes("X")){
+  document.getElementById("message").textContent=
+   "প্রথমে কোডের WHATSAPP-এ নিজের নম্বর বসান।";
+  return;
+ }
+ const payment=f.get("method")==="bKash"?BKASH:NAGAD;
+ const text=[
+  "ARUTOPUP ORDER",
+  "Name: "+f.get("customer"),
+  "Player UID: "+f.get("uid"),
+  "Package: "+item[0],
+  "Price: Tk "+item[1],
+  "Payment: "+f.get("method"),
+  "Payment number: "+payment,
+  "Transaction ID: "+f.get("trx"),
+  "Note: "+(f.get("note")||"None")
+ ].join("\n");
+ document.getElementById("message").textContent=
+  "WhatsApp খুলবে। অর্ডারের তথ্য দেখে Send চাপুন।";
+ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(text),"_blank");
+});
+</script>
+</body>
+</html>
